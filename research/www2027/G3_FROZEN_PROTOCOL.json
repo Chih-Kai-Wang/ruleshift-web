@@ -1,0 +1,178 @@
+{
+  "analysis": {
+    "bootstrap_draws": 10000,
+    "bootstrap_seed": 20260928,
+    "interval": "two_sided_95_percentile",
+    "primary": "correct_final_decision_and_state_change",
+    "secondary_paired": "agent_http_requests_per_task",
+    "stratify": "scenario",
+    "unit": "paired_eight_task_stream"
+  },
+  "audit_script_sha256": "57a1c4f6c6bb0ea88aeed5a0f8c022484d48b37db23a0dcde658be4ceb1b3f73",
+  "control": {
+    "format_adapter": "strict",
+    "implementation_sha256": "ab65d8313976c2622ddf8a95789b24f57b499228ca229ef4d3250b656dc60b97",
+    "model": "deterministic_public_evidence",
+    "revision": "v2-g2-1",
+    "slot": 2
+  },
+  "formal_runner_sha256": "0355bb64ba00a1f68713e00eddce6afd5be4867ae187935969efb683a9740bf0",
+  "implementation_sha256": "b13274c799962afa8b50e0c6f695b39fdd4ac525483297d4288b172b1aea6893",
+  "inference": {
+    "cpu_disk_offload": false,
+    "dtype": "float16",
+    "max_new_tokens": 96,
+    "sampling": "greedy"
+  },
+  "kind": "RuleShift-Web-G3",
+  "limit": "Synthetic controlled HTTP harness; no real-site generalization.",
+  "model_ids": [
+    "Qwen/Qwen3-4B-Instruct-2507",
+    "microsoft/Phi-4-mini-instruct"
+  ],
+  "models": {
+    "Qwen/Qwen3-4B-Instruct-2507": {
+      "format_adapter": "strict",
+      "gpu": "NVIDIA L4",
+      "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "runtime": {
+        "accelerate": "1.11.0",
+        "fastapi": "0.141.1",
+        "httpx": "0.28.1",
+        "huggingface_hub": "0.36.0",
+        "pydantic": "2.13.5",
+        "python": "3.13.15",
+        "torch": "2.11.0+cu128",
+        "transformers": "4.57.1"
+      },
+      "slot": 0
+    },
+    "microsoft/Phi-4-mini-instruct": {
+      "format_adapter": "phi_json_fence_v1",
+      "gpu": "NVIDIA L4",
+      "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+      "runtime": {
+        "accelerate": "1.11.0",
+        "fastapi": "0.141.1",
+        "httpx": "0.28.1",
+        "huggingface_hub": "0.36.0",
+        "pydantic": "2.13.5",
+        "python": "3.13.15",
+        "torch": "2.11.0+cu128",
+        "transformers": "4.57.1"
+      },
+      "slot": 1
+    }
+  },
+  "preflight": {
+    "Qwen/Qwen3-4B-Instruct-2507": {
+      "completed_model_tasks": 160,
+      "effective_format_errors": 0,
+      "gpu": "NVIDIA L4",
+      "manifest_sha256": "6bb995d58a8e1075517dd926780925e9fff5a828e7d41cf39680a32bf0ac5676",
+      "raw_format_errors": 0,
+      "runtime": {
+        "accelerate": "1.11.0",
+        "fastapi": "0.141.1",
+        "httpx": "0.28.1",
+        "huggingface_hub": "0.36.0",
+        "pydantic": "2.13.5",
+        "python": "3.13.15",
+        "torch": "2.11.0+cu128",
+        "transformers": "4.57.1"
+      },
+      "sqlite_sha256": "45e7398cb7edad6e304485049cd62aeb65642bcfe1a3ee7ad6c2beb4f864837c",
+      "summary_sha256": "f8b8b01f8d736241231685674ade0b761dda5da08825c782d0a01c0fe8d251f5"
+    },
+    "microsoft/Phi-4-mini-instruct": {
+      "completed_model_tasks": 160,
+      "effective_format_errors": 58,
+      "gpu": "NVIDIA L4",
+      "manifest_sha256": "bdc4254cc38d5f90254b8f13dc3a2ac9d5b8d007815097adfa7c029e5a92e6f3",
+      "raw_format_errors": 164,
+      "runtime": {
+        "accelerate": "1.11.0",
+        "fastapi": "0.141.1",
+        "httpx": "0.28.1",
+        "huggingface_hub": "0.36.0",
+        "pydantic": "2.13.5",
+        "python": "3.13.15",
+        "torch": "2.11.0+cu128",
+        "transformers": "4.57.1"
+      },
+      "sqlite_sha256": "44a7c5e89a3399006249102c414352302afae2861614e01e064a829dabc33969",
+      "summary_sha256": "ca46b52c94bbe9ba2c6d8fa06c1caf9ff228231026bb7df0fa4eaf9d616a75d1"
+    }
+  },
+  "preflight_archive_sha256": "f5d32098607d7fbfee5af4c9702640b764af5ac0324ea526cfccda9d350df53b",
+  "resource": {
+    "available_ccu": 186.91,
+    "ccu_before": 187.29,
+    "ccu_debit_resolution": "observed_positive",
+    "measured_ccu_per_hour": 4.980841917101168,
+    "observation_provenance": "user-recorded Colab balances and cumulative wall/load times",
+    "observed_ccu_debit": 0.37999999999999545,
+    "projected_ccu": 15.473844817703732,
+    "projected_wall_hours_with_setup": 1.5533362707794443,
+    "rate_used_ccu_per_hour": 4.980841917101168,
+    "reserve_ccu": 37.382,
+    "safety_factor": 2.0,
+    "setup_reserve_hours": 1.0
+  },
+  "resource_decision": "3200",
+  "schedule_seed": 20261001,
+  "schema_version": 1,
+  "status": "frozen",
+  "strategies": [
+    "retrieval",
+    "always_refresh",
+    "conditional_all",
+    "v1_selective",
+    "source_dependent"
+  ],
+  "stream_seed": 20261003,
+  "stream_sha256": [
+    "d855776b7a06a4401619d413880d5c456600e69ff4385ec699930580ec93ef83",
+    "6506814de72ad0aa6eb8e36bb9aa1bd1294b0a29f397a2c286c42daa76aea3f0",
+    "5cb87efc191c112f703d2c987266793261a93a72da0a9ac94323949268aec085",
+    "77f62129c6eafa4f80cbf0b03eda79fc02f798144f26e78d2d86a8e2c3d1795c",
+    "cbc3cb533e65375383d448dcf706db3cde852037dcbcd1a3fb88430c3127b89f",
+    "ec66ad4cbe357bac3a70fb2b5c4d244a6a3b88dbd6fb5a6423a5a663969298c6",
+    "c6e411ad9449482094aedaca4612d7ffcc59347f434c53a752af1f08a077bba3",
+    "f4419780107329e4a2267ed4e738a1942615f7a8f23aad4b7944846f895812b4",
+    "c9a613480e6fbe40b4c736901ea801e95f6b2d486d4b262be57b78c91c297a70",
+    "9559e3c9b66ab8ae847385d2c81d86adb34d010d15a29bc3d369a2cda2900b40",
+    "61501bd4afe949ed4b8395c9a2bcc7bd7af5f8685cee15bed685d58fb56d3e02",
+    "dbbdef5aea57b066f8df37220b56a44b3f92e936f49cce341a3dc380547d8631",
+    "5d3a4060af350b8240b90b6b5e0094956b25c68932d9e8a929287d44bf13e01b",
+    "c2e06b702694bff0dd685d99ac4dea534cb2a816a787cd1de9f8941d0103253b",
+    "10400c740499f68082b015339a74553d523adb6ded6d19fa55c505f28dad2d1b",
+    "b8c9621b3a1de11fc3a1cbc587dcea59f9429144110b97d858cb2a96b1d423e7",
+    "cb79fa9198e42cfe1202f43292f7820ebb7c873da009c757b0fbcd0ecb2c2c0d",
+    "464e75dfbc672ba475fc9b12d7fb43b6a2e68cbef5720e38ab3f0d59fc2a7235",
+    "befc343b87205044e4f5802f63b21ee50e1b7cd5d5a118f039f73264cdae863f",
+    "38847097e0ca259ac152bdcd8ce52b1628fd472f15377f4d2c0201ebc07ac04f",
+    "23573fa0882b7429bc943b69e30cf1edfc93f2f9700d7ee078edd9087c6a194e",
+    "3b49ee0c729e5ab7d6c75effd7ccbe741396f80efea6889b155014ade17a94da",
+    "9d263439d61b710b68e00a3727c03707693274261393ddb108f6a612f25b88d4",
+    "515c050a3ef705bd84a50b9be91bdcf52b20b92f1ac35e51cf878faa353c8adb",
+    "468dac56b9b07b1b802c854cd7c431df75b3b8d15bc82321a56e38e67f72ead5",
+    "3347f02fc333e8e9a68608d3797e8efa3da3879ea5fa95b4b0dba4b07eb10cd3",
+    "e8f71fe8e563e167cb4b5b0a410a6b66f7742880cf81b51e3d9b9b9e9f682e54",
+    "b7fcfa5b064bda8e7ba537e907815eb3fa1454f65c543ec05b5736d19101f98e",
+    "9ed4c153fd818aee0d299a16d5d35e4c24f668b5811bc3e06f0219784640dd0d",
+    "00387d4013b03789ee17d9f10e92e4966ff47578d7e66bd1f7a090de33d9d3b5",
+    "4402f021f0b3a50b53d76146ecf2528e050a35ba64ffa90cf4d828e5e111e77e",
+    "0833f06de581ec4c83e1c385a49ed73de3b0336dae0debcbc8050ea91f60e3aa",
+    "160f1f493cf7d02ebee8c0a455e48d3bacd9ebedddc6ddc1ce8243d368a1bfc9",
+    "7cbdf1fe076028ff4ecc00b0f3041931ce33434639643d4ef1fb3a0aa1ad8d5b",
+    "88e35ea172fa9432b59c7922b50c2d9580aff85b917d0eb7f35b785d7ef61200",
+    "0c83952532988d9af5526268d46343f5fc3f77aeaf9d9c4854147fbbeef5af5c",
+    "e7be032f15346e41fe171ffa59f1794e2aff0494d4c2aa77d9c29c4ee39a2802",
+    "1f138d47547497e5efa387eec9463c3976b900859b497c34a81de6af76885270",
+    "8e115ed798f258503e2136eeef06903f8f34b3385704c03576703bc6ab4a0027",
+    "975dfef80acd8cdc88f820f923cdbbd28e134bef36d186bd2ce5d07953f4b0da"
+  ],
+  "streams_per_scenario": 10,
+  "target_model_tasks": 3200
+}

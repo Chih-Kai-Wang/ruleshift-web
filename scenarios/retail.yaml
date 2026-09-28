@@ -1,0 +1,12 @@
+name: retail-v1
+schema_version: 1
+schedules: [stable, single, multi, recurring]
+seeds: [101, 202, 303, 404, 505]
+tasks_per_stream: 8
+tool_budget: 12
+memory_tokens: 1024
+model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+model_revision: 50d427756c6b1b2fe0c0a10f67fbda1fc8e82c1b
+policies: [none, retrieval, ttl, refresh, selective]
+split: test
+

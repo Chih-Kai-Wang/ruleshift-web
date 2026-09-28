@@ -1,0 +1,200 @@
+{
+  "by_strategy": {
+    "always_refresh": {
+      "agent_http_requests": 984,
+      "completion_tokens": 0,
+      "correct": 320,
+      "effective_format_errors": 0,
+      "initial_correct": 320,
+      "invalid_commits": 0,
+      "model_seconds": 0.002429076237604022,
+      "policy_blocks": 0,
+      "policy_reads": 520,
+      "prompt_tokens": 0,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 0,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "conditional_all": {
+      "agent_http_requests": 2264,
+      "completion_tokens": 0,
+      "correct": 320,
+      "effective_format_errors": 0,
+      "initial_correct": 320,
+      "invalid_commits": 0,
+      "model_seconds": 0.003917300724424422,
+      "policy_blocks": 0,
+      "policy_reads": 1800,
+      "prompt_tokens": 0,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 0,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "retrieval": {
+      "agent_http_requests": 684,
+      "completion_tokens": 0,
+      "correct": 300,
+      "effective_format_errors": 0,
+      "initial_correct": 280,
+      "invalid_commits": 0,
+      "model_seconds": 0.0023442782694473863,
+      "policy_blocks": 0,
+      "policy_reads": 220,
+      "prompt_tokens": 0,
+      "raw_format_errors": 0,
+      "revision_conflicts": 20,
+      "server_rejections": 20,
+      "stale_evidence_first_decision": 40,
+      "stale_memory_errors": 40,
+      "streams": 40,
+      "tasks": 320
+    },
+    "source_dependent": {
+      "agent_http_requests": 984,
+      "completion_tokens": 0,
+      "correct": 320,
+      "effective_format_errors": 0,
+      "initial_correct": 320,
+      "invalid_commits": 0,
+      "model_seconds": 0.0027446176391094923,
+      "policy_blocks": 0,
+      "policy_reads": 520,
+      "prompt_tokens": 0,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 0,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "v1_selective": {
+      "agent_http_requests": 684,
+      "completion_tokens": 0,
+      "correct": 300,
+      "effective_format_errors": 0,
+      "initial_correct": 280,
+      "invalid_commits": 0,
+      "model_seconds": 0.0024029614869505167,
+      "policy_blocks": 0,
+      "policy_reads": 220,
+      "prompt_tokens": 0,
+      "raw_format_errors": 0,
+      "revision_conflicts": 20,
+      "server_rejections": 20,
+      "stale_evidence_first_decision": 40,
+      "stale_memory_errors": 40,
+      "streams": 40,
+      "tasks": 320
+    }
+  },
+  "formal_analysis_enabled": true,
+  "kind": "G3_independent_checkpoint_audit",
+  "limit": "Frozen held-out matrix; interpret paired estimates only with both model checkpoints and resource record.",
+  "model": {
+    "backend": "deterministic_public_evidence",
+    "revision": "v2-g2-1"
+  },
+  "paired": [
+    {
+      "baseline": "retrieval",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0625,
+        0.0625
+      ],
+      "mean_accuracy_difference": 0.0625,
+      "streams": 40
+    },
+    {
+      "baseline": "always_refresh",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_accuracy_difference": 0.0,
+      "streams": 40
+    },
+    {
+      "baseline": "conditional_all",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_accuracy_difference": 0.0,
+      "streams": 40
+    },
+    {
+      "baseline": "v1_selective",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0625,
+        0.0625
+      ],
+      "mean_accuracy_difference": 0.0625,
+      "streams": 40
+    }
+  ],
+  "paired_http_requests": [
+    {
+      "baseline": "retrieval",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.9375,
+        0.9375
+      ],
+      "mean_http_requests_per_task_difference": 0.9375,
+      "streams": 40
+    },
+    {
+      "baseline": "always_refresh",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_http_requests_per_task_difference": 0.0,
+      "streams": 40
+    },
+    {
+      "baseline": "conditional_all",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        -4.0,
+        -4.0
+      ],
+      "mean_http_requests_per_task_difference": -4.0,
+      "streams": 40
+    },
+    {
+      "baseline": "v1_selective",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.9375,
+        0.9375
+      ],
+      "mean_http_requests_per_task_difference": 0.9375,
+      "streams": 40
+    }
+  ],
+  "recorded_failures": [],
+  "streams_audited": 200
+}

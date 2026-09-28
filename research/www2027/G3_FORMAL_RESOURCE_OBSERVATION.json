@@ -1,0 +1,15 @@
+{
+  "kind": "G3_formal_Colab_Pro_resource_observation",
+  "date_local": "2026-09-28",
+  "timezone": "Asia/Taipei",
+  "source": "assistant-observed Safari Colab resource panel",
+  "gpu": "NVIDIA L4",
+  "displayed_gpu_vram_gib": 22.03,
+  "ccu_before_formal": 186.91,
+  "ccu_after_formal": 185.37,
+  "observed_balance_difference_ccu": 1.54,
+  "displayed_rate_near_completion_ccu_per_hour": 1.54,
+  "qwen_formal_script_wall_seconds": 930.5295375210003,
+  "phi_formal_script_wall_seconds": 993.0639515559997,
+  "note": "The balance difference includes notebook setup and idle time between displayed readings; it is not an exact cost attributed to the 3200 tasks. Balances are UI-rounded and account-shared."
+}

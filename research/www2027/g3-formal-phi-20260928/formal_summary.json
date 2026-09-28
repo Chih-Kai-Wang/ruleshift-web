@@ -1,0 +1,27 @@
+{
+  "agent_http_requests": 5018,
+  "complete": true,
+  "completed": 200,
+  "completed_model_tasks": 1600,
+  "completion_tokens": 23900,
+  "correct": 895,
+  "device_map": {
+    "": "0"
+  },
+  "effective_format_errors": 685,
+  "gpu": "NVIDIA L4",
+  "kind": "G3_frozen_held_out_run",
+  "load_seconds_this_invocation": 13.263176942999962,
+  "model": "microsoft/Phi-4-mini-instruct",
+  "model_seconds": 949.1981908789876,
+  "peak_gpu_memory_bytes": 7750786048,
+  "planned": 200,
+  "planned_model_tasks": 1600,
+  "policy_reads": 3266,
+  "prompt_tokens": 458704,
+  "protocol_sha256": "3ef328fbdbb02ff2862445751f8a4f261a2e15014253f81cde72a4a8980f34d8",
+  "raw_format_errors": 1626,
+  "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+  "server_rejections": 26,
+  "wall_seconds_this_invocation": 993.0639515559997
+}

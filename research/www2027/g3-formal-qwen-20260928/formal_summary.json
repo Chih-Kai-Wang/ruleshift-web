@@ -1,0 +1,27 @@
+{
+  "agent_http_requests": 5868,
+  "complete": true,
+  "completed": 200,
+  "completed_model_tasks": 1600,
+  "completion_tokens": 17103,
+  "correct": 1402,
+  "device_map": {
+    "": "0"
+  },
+  "effective_format_errors": 0,
+  "gpu": "NVIDIA L4",
+  "kind": "G3_frozen_held_out_run",
+  "load_seconds_this_invocation": 13.431492671000342,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_seconds": 880.8002797910012,
+  "peak_gpu_memory_bytes": 8135669248,
+  "planned": 200,
+  "planned_model_tasks": 1600,
+  "policy_reads": 3318,
+  "prompt_tokens": 519289,
+  "protocol_sha256": "3ef328fbdbb02ff2862445751f8a4f261a2e15014253f81cde72a4a8980f34d8",
+  "raw_format_errors": 0,
+  "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "server_rejections": 253,
+  "wall_seconds_this_invocation": 930.5295375210003
+}

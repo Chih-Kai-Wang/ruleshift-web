@@ -1,0 +1,213 @@
+{
+  "by_strategy": {
+    "always_refresh": {
+      "agent_http_requests": 1017,
+      "completion_tokens": 3260,
+      "correct": 287,
+      "effective_format_errors": 0,
+      "initial_correct": 287,
+      "invalid_commits": 0,
+      "model_seconds": 167.6486176420035,
+      "policy_blocks": 33,
+      "policy_reads": 520,
+      "prompt_tokens": 98736,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 33,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "conditional_all": {
+      "agent_http_requests": 2300,
+      "completion_tokens": 3257,
+      "correct": 284,
+      "effective_format_errors": 0,
+      "initial_correct": 284,
+      "invalid_commits": 0,
+      "model_seconds": 167.38469698599692,
+      "policy_blocks": 36,
+      "policy_reads": 1800,
+      "prompt_tokens": 98736,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 36,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "retrieval": {
+      "agent_http_requests": 737,
+      "completion_tokens": 3525,
+      "correct": 273,
+      "effective_format_errors": 0,
+      "initial_correct": 260,
+      "invalid_commits": 0,
+      "model_seconds": 182.08606857099448,
+      "policy_blocks": 35,
+      "policy_reads": 225,
+      "prompt_tokens": 106949,
+      "raw_format_errors": 0,
+      "revision_conflicts": 25,
+      "server_rejections": 60,
+      "stale_evidence_first_decision": 37,
+      "stale_memory_errors": 32,
+      "streams": 40,
+      "tasks": 320
+    },
+    "source_dependent": {
+      "agent_http_requests": 1020,
+      "completion_tokens": 3257,
+      "correct": 284,
+      "effective_format_errors": 0,
+      "initial_correct": 284,
+      "invalid_commits": 0,
+      "model_seconds": 167.48918790300013,
+      "policy_blocks": 36,
+      "policy_reads": 520,
+      "prompt_tokens": 98736,
+      "raw_format_errors": 0,
+      "revision_conflicts": 0,
+      "server_rejections": 36,
+      "stale_evidence_first_decision": 0,
+      "stale_memory_errors": 0,
+      "streams": 40,
+      "tasks": 320
+    },
+    "v1_selective": {
+      "agent_http_requests": 794,
+      "completion_tokens": 3804,
+      "correct": 274,
+      "effective_format_errors": 0,
+      "initial_correct": 261,
+      "invalid_commits": 0,
+      "model_seconds": 196.1917086890062,
+      "policy_blocks": 63,
+      "policy_reads": 253,
+      "prompt_tokens": 116132,
+      "raw_format_errors": 0,
+      "revision_conflicts": 25,
+      "server_rejections": 88,
+      "stale_evidence_first_decision": 36,
+      "stale_memory_errors": 31,
+      "streams": 40,
+      "tasks": 320
+    }
+  },
+  "formal_analysis_enabled": true,
+  "kind": "G3_independent_checkpoint_audit",
+  "limit": "Frozen held-out matrix; interpret paired estimates only with both model checkpoints and resource record.",
+  "model": {
+    "accelerate": "1.11.0",
+    "backend": "cuda_transformers",
+    "cuda_device": "NVIDIA L4",
+    "device_map": {
+      "": "0"
+    },
+    "fastapi": "0.141.1",
+    "httpx": "0.28.1",
+    "huggingface_hub": "0.36.0",
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "pydantic": "2.13.5",
+    "python": "3.13.15",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.1"
+  },
+  "paired": [
+    {
+      "baseline": "retrieval",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.015625,
+        0.053125
+      ],
+      "mean_accuracy_difference": 0.034375,
+      "streams": 40
+    },
+    {
+      "baseline": "always_refresh",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        -0.01875,
+        0.0
+      ],
+      "mean_accuracy_difference": -0.009375,
+      "streams": 40
+    },
+    {
+      "baseline": "conditional_all",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean_accuracy_difference": 0.0,
+      "streams": 40
+    },
+    {
+      "baseline": "v1_selective",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0125,
+        0.05
+      ],
+      "mean_accuracy_difference": 0.03125,
+      "streams": 40
+    }
+  ],
+  "paired_http_requests": [
+    {
+      "baseline": "retrieval",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.85,
+        0.91875
+      ],
+      "mean_http_requests_per_task_difference": 0.884375,
+      "streams": 40
+    },
+    {
+      "baseline": "always_refresh",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.0,
+        0.01875
+      ],
+      "mean_http_requests_per_task_difference": 0.009375,
+      "streams": 40
+    },
+    {
+      "baseline": "conditional_all",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        -4.0,
+        -4.0
+      ],
+      "mean_http_requests_per_task_difference": -4.0,
+      "streams": 40
+    },
+    {
+      "baseline": "v1_selective",
+      "bootstrap_draws": 10000,
+      "bootstrap_seed": 20260928,
+      "ci95": [
+        0.6,
+        0.8125
+      ],
+      "mean_http_requests_per_task_difference": 0.70625,
+      "streams": 40
+    }
+  ],
+  "recorded_failures": [],
+  "streams_audited": 200
+}

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RuleShift-Web · Policy Evidence Lab</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #f3f5f2; color: #172821; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; }
+    header { background: #153b2d; color: #f5f6ee; padding: 2rem max(1.2rem, calc((100vw - 1120px)/2)); }
+    .eyebrow { color: #a6d5b7; font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); letter-spacing: -.04em; margin: .35rem 0 .65rem; line-height: 1.08; }
+    header p { margin: 0; color: #d1e4d6; max-width: 740px; line-height: 1.5; }
+    main { max-width: 1160px; padding: 1.4rem 1.2rem 4rem; margin: auto; }
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .45rem .8rem; background: #e2efe5; color: #135031; font-weight: 700; font-size: .8rem; }
+    .badge.offline { background: #fff1d6; color: #805114; }
+    .small { font-size: .82rem; color: #526359; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+    .wide { grid-column: 1 / -1; }
+    section { background: white; border: 1px solid #dce4dc; border-radius: 16px; box-shadow: 0 7px 24px #153b2d0a; padding: 1.25rem; }
+    h2 { font-size: 1.05rem; margin: 0 0 .35rem; letter-spacing: -.02em; }
+    h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; color: #4e6659; margin: 1.1rem 0 .45rem; }
+    .help { margin: 0 0 1rem; font-size: .85rem; line-height: 1.45; color: #526359; }
+    .controls { display: flex; flex-wrap: wrap; gap: .55rem; }
+    button, a.button, select { appearance: none; cursor: pointer; border: 1px solid #b9cbc0; border-radius: 9px; background: #f9fcf9; color: #17452e; padding: .58rem .75rem; font-family: inherit; font-size: .83rem; font-weight: 650; text-decoration: none; line-height: 1.2; }
+    button:hover, a.button:hover { border-color: #206645; background: #e9f4ec; }
+    button:focus-visible, a.button:focus-visible { outline: 3px solid #6caa7f; outline-offset: 2px; }
+    button.primary { background: #215e3d; color: white; border-color: #215e3d; }
+    button.primary:hover { background: #17482e; }
+    button:disabled { opacity: .4; cursor: not-allowed; }
+    .mono, pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .evidence { background: #f6f9f5; border: 1px solid #e0e9df; border-radius: 10px; padding: .8rem; min-height: 150px; }
+    dl { display: grid; grid-template-columns: 140px minmax(0,1fr); margin: 0; gap: .45rem .7rem; font-size: .84rem; }
+    dt { color: #526359; }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    .result { padding: .8rem; border-radius: 10px; background: #eef4ef; margin-top: 1rem; min-height: 3rem; font-size: .88rem; line-height: 1.5; }
+    .result.error { background: #fff0e6; color: #883a1a; }
+    .state { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+    .metric { display: flex; flex-direction: column; min-width: 120px; }
+    .metric strong { font-size: 1.5rem; letter-spacing: -.04em; }
+    .metric span { font-size: .75rem; color: #526359; }
+    .timeline { display: grid; grid-template-columns: minmax(220px, .9fr) minmax(0,1.1fr); gap: 1rem; }
+    .event-list { max-height: 390px; overflow: auto; border: 1px solid #e0e8df; border-radius: 10px; }
+    .event { width: 100%; display: flex; justify-content: space-between; gap: .5rem; border: 0; border-bottom: 1px solid #e0e8df; border-radius: 0; text-align: left; background: white; padding: .75rem; }
+    .event:last-child { border-bottom: 0; }
+    .event.selected { background: #e7f2e9; box-shadow: inset 3px 0 #2c8a56; }
+    .event em { font-size: .75rem; color: #63756a; font-style: normal; }
+    .table-wrap { overflow-x: auto; }
+    .results-table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .82rem; font-variant-numeric: tabular-nums; }
+    .results-table th, .results-table td { border-bottom: 1px solid #e0e8df; padding: .55rem .65rem; text-align: right; white-space: nowrap; }
+    .results-table th:first-child, .results-table td:first-child { text-align: left; }
+    .results-table thead { background: #f1f7f1; color: #173d2b; }
+    .results-table tr.highlight { background: #edf5ed; font-weight: 700; }
+    pre { background: #142821; color: #dff0df; border-radius: 10px; padding: 1rem; overflow: auto; margin: 0; min-height: 220px; max-height: 390px; font-size: .78rem; line-height: 1.5; }
+    footer { max-width: 1120px; margin: 1rem auto 3rem; padding: 0 1.2rem; font-size: .78rem; color: #56685c; line-height: 1.45; }
+    @media (max-width: 750px) { .grid, .timeline { grid-template-columns: 1fr; } .wide { grid-column: auto; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">RuleShift-Web · Research prototype v2</div>
+    <h1>When a policy changes, what does the agent know?</h1>
+    <p>Publish a new rule, choose how to check a cached source, submit a retail operation, then inspect the HTTP evidence and committed state. Researcher controls and scoring stay outside agent input.</p>
+  </header>
+  <main>
+    <div class="bar"><span id="mode" class="badge">Connecting to local origin…</span><span class="small" id="notice">Local, controlled retail environment</span></div>
+    <div class="grid">
+      <section>
+        <h2>1 · Publish policy</h2>
+        <p class="help">The origin uses the published rule for every transaction. Editing shipping is an unrelated-source control.</p>
+        <label class="small" for="task-select">Retail task</label>
+        <select id="task-select" aria-label="Retail task"><option value="purchase">Purchase discount</option><option value="refund">Return and refund</option><option value="ship">Ship an order</option><option value="address">Change an address</option></select>
+        <div class="controls">
+          <button data-action="reset">Reset world</button>
+          <button data-action="publish-p2">Publish restrictive P2</button>
+          <button data-action="publish-p3">Publish permissive P3</button>
+          <button data-action="publish-p1">Revert to P1</button>
+          <button data-action="unrelated">Edit shipping only</button>
+        </div>
+        <h3>Current origin state</h3>
+        <div class="state"><div class="metric"><strong id="origin-rule">—</strong><span>relevant rule</span></div><div class="metric"><strong id="outcome">—</strong><span>transaction state</span></div><div class="metric"><strong id="reads">—</strong><span>origin policy reads</span></div></div>
+      </section>
+      <section>
+        <h2>2 · Check evidence</h2>
+        <p class="help">Reuse keeps the client-held response while its HTTP max-age is fresh. Conditional GET sends <code>If-None-Match</code>; reload always retrieves a body.</p>
+        <div class="controls">
+          <button data-action="reuse">Reuse fresh cache</button>
+          <button data-action="conditional">Conditional GET</button>
+          <button data-action="reload">Unconditional reload</button>
+        </div>
+        <h3>Client-held evidence</h3>
+        <div id="evidence" class="evidence" aria-live="polite">No source acquired yet. Start with an unconditional reload.</div>
+      </section>
+      <section>
+        <h2>3 · Act on evidence</h2>
+        <p class="help">Each operation sends the revision from the client's last evidence. The origin checks its current policy under the same lock as the state change.</p>
+        <div class="controls"><button data-action="decide">Check public eligibility · no action</button><button class="primary" data-action="purchase">Submit requested operation</button><button data-action="verify">Verify replay</button><button data-action="download">Download trace</button></div>
+        <div id="result" class="result" role="status" aria-live="polite">Choose a policy check, or publish a change between checking and buying to test the race.</div>
+      </section>
+      <section>
+        <h2>What to try</h2>
+        <p class="help">Start from P1. Reload its policy, then publish P2 and reuse cached P1: the transaction must be rejected without mutation. Revalidate, publish another rule before committing to expose the second race, and revert to P1 to see its original ETag return.</p>
+        <p class="help">A 304 confirms only the selected HTTP representation. It does not authorize a later purchase. A 409 rejection and a wrong committed purchase are distinct outcomes.</p>
+      </section>
+      <section class="wide">
+        <h2>4 · Inspect the trace</h2>
+        <p class="help">Select an event to inspect its request, response, and resulting state hash. Offline mode displays exported traces that were verified when created.</p>
+        <p class="help" id="branch-note" hidden>The seven selectable offline branches display recorded purchase-discount interventions. Loading a branch does not re-execute it or generate a model decision.</p>
+        <div id="offline-choice" class="controls" hidden>
+          <select id="branch-select" aria-label="Recorded offline intervention">
+            <option value="unchanged">No change · conditional 304</option>
+            <option value="unrelated">Unrelated source change</option>
+            <option value="cached">Relevant change · reuse old cache</option>
+            <option value="conditional">Relevant change · conditional GET</option>
+            <option value="reload">Relevant change · unconditional reload</option>
+            <option value="reversion">A→B→A reversion</option>
+            <option value="race">Verified evidence → commit race</option>
+          </select>
+          <button id="load-branch">Load recorded intervention</button>
+        </div>
+        <div id="model-choice" hidden>
+          <h3>Recorded local model development runs</h3>
+          <p class="help">These are saved Qwen MLX decisions, not live inference, Colab CUDA results, or held-out evidence. Select a case to inspect the raw response, strategy, final state, and HTTP events.</p>
+          <div class="controls"><select id="model-select" aria-label="Recorded model development case"></select><button id="load-model">Inspect saved model run</button></div>
+          <pre id="model-detail" aria-label="Recorded model output" hidden></pre>
+        </div>
+        <div class="timeline"><div id="events" class="event-list" aria-label="Event timeline"></div><div><p id="event-selection" class="help" role="status"></p><pre id="detail" aria-label="Selected event detail">No event selected.</pre></div></div>
+      </section>
+      <section class="wide">
+        <h2>5 · Compare frozen study results</h2>
+        <p class="help">Recorded held-out Colab L4 evaluation, not decisions generated by this page. Each model cell contains 320 tasks (40 paired eight-task streams). “Correct” requires the right decision and resulting state. HTTP counts are total agent requests over the same 320 tasks. The rule controller is a separate no-LLM reference.</p>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead><tr><th scope="col">Evidence strategy</th><th scope="col">Qwen correct</th><th scope="col">Phi correct</th><th scope="col">Rule controller</th><th scope="col">Qwen HTTP</th><th scope="col">Phi HTTP</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Retrieval</th><td>273 / 320</td><td>141 / 320</td><td>300 / 320</td><td>737</td><td>555</td></tr>
+              <tr><th scope="row">Prior selective</th><td>274 / 320</td><td>141 / 320</td><td>300 / 320</td><td>794</td><td>555</td></tr>
+              <tr><th scope="row">Always refresh</th><td>287 / 320</td><td>223 / 320</td><td>320 / 320</td><td>1,017</td><td>890</td></tr>
+              <tr><th scope="row">Conditional all</th><td>284 / 320</td><td>195 / 320</td><td>320 / 320</td><td>2,300</td><td>2,149</td></tr>
+              <tr class="highlight"><th scope="row">Source dependent</th><td>284 / 320</td><td>195 / 320</td><td>320 / 320</td><td>1,020</td><td>869</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="help" style="margin-top:1rem">In this single-relevant-source test, source dependent ties conditional all while making four fewer policy reads per task. Always refresh had higher observed accuracy; Qwen's paired interval includes zero. Phi had 685 remaining response-contract failures after its predeclared fence adapter, all contradictory action/reason fields. The frozen protocol and raw SQLite checkpoints are retained in the research package; this table is a read-only summary.</p>
+      </section>
+    </div>
+  </main>
+  <footer>Researcher-only local demonstration. The site policy and purchase routes are agent-facing; publication, snapshots, and replay are not. Model decisions are not generated in this interface. The offline trace is a recorded example and is labelled separately from a live run.</footer>
+  <script src="./web_lab_trace.js"></script>
+  <script src="./web_model_trace.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    let offline = false, snapshot = null, cached = null, selected = null;
+    const TASKS = {
+      purchase: {scope:'discount', order:null, operation:'purchase',
+        p1:{eligible:true,percent:10}, p2:{eligible:false,percent:0}, p3:{eligible:true,percent:5}},
+      refund: {scope:'returns', order:'RET-001', operation:'refund',
+        p1:{window_days:30,accept_opened:false}, p2:{window_days:14,accept_opened:false}, p3:{window_days:25,accept_opened:false}},
+      ship: {scope:'fulfillment', order:'SHIP-001', operation:'ship',
+        p1:{max_quantity:6,destinations:['mainland','island']}, p2:{max_quantity:1,destinations:['mainland']}, p3:{max_quantity:3,destinations:['mainland','island']}},
+      address: {scope:'changes', order:'ADDR-001', operation:'address',
+        p1:{max_age_hours:72,allow_express:true}, p2:{max_age_hours:18,allow_express:false}, p3:{max_age_hours:48,allow_express:true}}
+    };
+    const task = () => TASKS[$('task-select').value];
+    const api = async (path, body, options = {}) => {
+      const response = await fetch(path, {
+        method: body === undefined ? 'GET' : 'POST',
+        cache: 'no-store',
+        headers: {'Content-Type': 'application/json', ...(options.headers || {})},
+        ...(body === undefined ? {} : {body: JSON.stringify(body)})
+      });
+      let data = null;
+      if (response.status !== 304) data = await response.json();
+      return {status: response.status, data, headers: response.headers};
+    };
+    const say = (message, error = false) => { $('result').textContent = message; $('result').classList.toggle('error', error); };
+    const setMode = (label, isOffline) => { $('mode').textContent = label; $('mode').classList.toggle('offline', isOffline); };
+    const renderEvidence = () => {
+      if (!cached) { $('evidence').textContent = 'No source acquired yet. Start with an unconditional reload.'; return; }
+      const fields = [
+        ['Source', cached.url], ['Obtained by', cached.via], ['Revision', cached.body.revision],
+        ['ETag', cached.etag], ['Rule', JSON.stringify(cached.body)],
+        ['HTTP freshness', new Date(cached.freshUntil).toLocaleTimeString()], ['Depends on', `${task().scope} policy`]
+      ];
+      const list = document.createElement('dl');
+      for (const [name, value] of fields) { const dt = document.createElement('dt'); dt.textContent = name; const dd = document.createElement('dd'); dd.textContent = value; list.append(dt, dd); }
+      $('evidence').replaceChildren(list);
+    };
+    const render = () => {
+      if (!snapshot) return;
+      const selectedTask = task(), rule = snapshot.state.policies[selectedTask.scope];
+      $('origin-rule').textContent = selectedTask.scope === 'discount' ? (rule.eligible ? `${rule.percent}%` : 'None') : rule.window_days ?? rule.max_quantity ?? rule.max_age_hours;
+      $('outcome').textContent = selectedTask.order ? snapshot.state.orders[selectedTask.order].status : `${snapshot.state.purchases.length} purchased`;
+      $('reads').textContent = snapshot.events.filter(e => e.kind === 'read').length;
+      const list = $('events'); list.replaceChildren();
+      for (const event of snapshot.events) {
+        const button = document.createElement('button'); button.className = 'event' + (selected === event.seq ? ' selected' : '');
+        button.dataset.seq = event.seq; button.setAttribute('aria-controls', 'detail');
+        button.setAttribute('aria-pressed', String(selected === event.seq));
+        const left = document.createElement('span'); left.textContent = `${String(event.seq + 1).padStart(2,'0')} · ${event.kind}`;
+        const right = document.createElement('em'); right.textContent = `HTTP ${event.status}`;
+        button.append(left, right); button.onclick = () => { selected = event.seq; $('detail').textContent = JSON.stringify(event, null, 2); $('event-selection').textContent = `Selected event ${event.seq + 1}: ${event.kind}, HTTP ${event.status}.`; render(); list.querySelector(`[data-seq="${event.seq}"]`)?.focus(); };
+        list.append(button);
+      }
+      if (selected === null && snapshot.events.length) { selected = snapshot.events.length - 1; $('detail').textContent = JSON.stringify(snapshot.events[selected], null, 2); render(); }
+      renderEvidence();
+    };
+    const refresh = async () => { snapshot = (await api('/research/snapshot')).data; render(); };
+    const activateOffline = () => {
+      offline = true; snapshot = window.RULESHIFT_OFFLINE_TRACE.snapshot; selected = null;
+      setMode('Recorded offline trace', true); $('notice').textContent = 'No network needed to inspect the saved event sequence';
+      document.querySelectorAll('[data-action]').forEach(b => { if (b.dataset.action !== 'download') b.disabled = true; });
+      $('task-select').disabled = true;
+      $('offline-choice').hidden = false; render();
+      $('branch-note').hidden = false;
+      if (window.RULESHIFT_MODEL_TRACE) {
+        const select = $('model-select'); select.replaceChildren();
+        window.RULESHIFT_MODEL_TRACE.cases.forEach((row, index) => {
+          const option = document.createElement('option'); option.value = String(index);
+          option.textContent = `${row.action} · ${row.scenario} · ${row.strategy} · ${row.final_correct ? 'correct' : 'error'}`;
+          select.append(option);
+        });
+        $('model-choice').hidden = false;
+      }
+      say('Offline trace: select an event or load one of seven preverified recorded interventions. Live publication and purchases require the local origin.');
+    };
+    const read = async mode => {
+      if (mode === 'reuse') {
+        if (!cached) return say('No cached response. Reload the policy first.', true);
+        if (Date.now() > cached.freshUntil) return say('Cache lifetime elapsed; revalidate or reload.', true);
+        cached.via = 'fresh cache reuse · no HTTP request'; renderEvidence();
+        return say(`Reused client-held ${cached.body.revision}; no request reached the origin.`);
+      }
+      const headers = mode === 'conditional' && cached ? {'If-None-Match': cached.etag} : {};
+      const response = await api(`/site/policies/${task().scope}`, undefined, {headers});
+      if (response.status === 304 && cached) {
+        cached.freshUntil = Date.now() + 120000; cached.via = 'conditional GET · 304 Not Modified';
+        say('Origin returned 304: cached representation validated at this instant.');
+      } else if (response.status === 200) {
+        cached = {body: response.data, etag: response.headers.get('etag'),
+          url: new URL(`/site/policies/${task().scope}`, location.href).href, freshUntil: Date.now() + 120000,
+          via: mode === 'conditional' ? 'conditional GET · 200 representation received' : 'unconditional reload · 200'};
+        say(`Origin returned ${response.status}: revision ${cached.body.revision}.`);
+      } else throw Error(`Policy request failed with HTTP ${response.status}`);
+      await refresh();
+    };
+    const eligibilityReason = (chosen, policy, order) => {
+      if (chosen.operation === 'purchase') return policy.eligible ? 'ok' : 'discount_ineligible';
+      if (chosen.operation === 'refund') {
+        if (order.age_days > policy.window_days) return 'too_old';
+        if (order.opened && !policy.accept_opened) return 'opened';
+      }
+      if (chosen.operation === 'ship') {
+        if (order.quantity > policy.max_quantity) return 'max_quantity';
+        if (!policy.destinations.includes(order.destination)) return 'destination';
+      }
+      if (chosen.operation === 'address') {
+        if (order.age_hours > policy.max_age_hours) return 'locked';
+        if (order.service === 'express' && !policy.allow_express) return 'service_level';
+      }
+      return 'ok';
+    };
+    const actions = {
+      'reset': async () => { await api('/research/reset', {}); cached = null; selected = null; await refresh(); say('World reset to P1; client evidence cleared.'); },
+      'publish-p2': async () => publish(task().scope, task().p2, 'Restrictive P2 published.'),
+      'publish-p3': async () => publish(task().scope, task().p3, 'Permissive P3 published.'),
+      'publish-p1': async () => publish(task().scope, task().p1, 'P1 restored.'),
+      'unrelated': async () => publish('shipping', {free_threshold:80}, 'Shipping changed; discount resource unchanged.'),
+      'reuse': async () => read('reuse'), 'conditional': async () => read('conditional'), 'reload': async () => read('reload'),
+      'decide': async () => {
+        if (!cached) return say('Acquire policy evidence before deciding.', true);
+        const chosen = task();
+        const order = chosen.order ? await api(`/site/orders/${chosen.order}`) : null;
+        if (order && order.status !== 200) throw Error(`Order inspection failed: HTTP ${order.status}`);
+        const reason = eligibilityReason(chosen, cached.body, order?.data.order);
+        await refresh();
+        say(reason === 'ok' ? 'Non-LLM check: eligible under held evidence. No transaction submitted.' :
+          `Non-LLM check: deny (${reason}) under held evidence. No transaction submitted.`);
+      },
+      'purchase': async () => {
+        if (!cached) return say('Acquire policy evidence before acting.', true);
+        const selectedTask = task();
+        const url = selectedTask.order ? `/site/orders/${selectedTask.order}/${selectedTask.operation}` : '/site/purchases';
+        const payload = selectedTask.order ? {expected_policy_revision:cached.body.revision,address:'20 New Street'} :
+          {sku:'notebook',request_discount:true,expected_policy_revision:cached.body.revision};
+        const response = await api(url, payload);
+        await refresh();
+        if (response.status === 201 || response.status === 200) say(`Operation committed under policy ${response.data.policy_revision || response.data.purchase.policy_revision}.`);
+        else say(`HTTP ${response.status}: ${response.data.error}. No state change was committed by this attempt.`, true);
+      },
+      'verify': async () => { const response = await api('/research/replay'); say(response.data.verified ? `Replay verified ${response.data.events} recorded events.` : `Replay failed at event ${response.data.seq}.`, !response.data.verified); },
+      'download': async () => { const blob = new Blob([JSON.stringify(snapshot, null, 2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'ruleshift-web-trace.json'; a.click(); URL.revokeObjectURL(url); say('Trace downloaded as JSON.'); }
+    };
+    const publish = async (scope, rule, message) => { const response = await api('/research/publish', {scope,rule}); if (response.status !== 200) throw Error(`Publication failed: HTTP ${response.status}`); await refresh(); say(message); };
+    document.querySelectorAll('[data-action]').forEach(button => button.onclick = async () => {
+      if (offline && button.dataset.action !== 'download') return;
+      button.disabled = true;
+      try { await actions[button.dataset.action](); } catch (error) { say(String(error), true); }
+      finally { button.disabled = false; }
+    });
+    $('load-branch').onclick = () => {
+      const branch = window.RULESHIFT_OFFLINE_TRACE.branches[$('branch-select').value];
+      $('task-select').value = 'purchase';
+      snapshot = branch.snapshot; selected = null; cached = null; render();
+      $('model-detail').hidden = true;
+      say(`Recorded ${branch.intervention} intervention: HTTP ${branch.outcome_status}, ${branch.outcome.purchase ? 'purchase committed' : branch.outcome.error}. ${branch.replay.events} origin events had been replay-verified when exported.`);
+    };
+    $('load-model').onclick = () => {
+      const row = window.RULESHIFT_MODEL_TRACE.cases[Number($('model-select').value)];
+      $('task-select').value = row.action;
+      snapshot = row.trace; selected = null; cached = null; render();
+      $('model-detail').textContent = JSON.stringify({
+        execution_kind:window.RULESHIFT_MODEL_TRACE.execution_kind,
+        model:window.RULESHIFT_MODEL_TRACE.model,
+        action:row.action, scenario:row.scenario, strategy:row.strategy,
+        decision:row.model_decision, final_correct:row.final_correct,
+        committed:row.committed, server_rejections:row.server_rejections,
+        responses:row.model_responses, memory_history:row.memory_history,
+        action_log:row.action_log
+      }, null, 2);
+      $('model-detail').hidden = false;
+      say(`Saved local MLX model run: ${row.action}, ${row.scenario}, ${row.strategy}; ${row.final_correct ? 'correct final decision' : 'incorrect final decision'}. ${row.server_rejections} server rejections.`);
+    };
+    $('task-select').onchange = () => { if (offline) return; cached = null; render(); say(`Switched to ${$('task-select').selectedOptions[0].textContent}; acquire its policy evidence.`); };
+    if (location.protocol === 'file:') activateOffline();
+    else refresh().then(() => setMode('Live local HTTP origin', false)).catch(() => activateOffline());
+  </script>
+</body>
+</html>

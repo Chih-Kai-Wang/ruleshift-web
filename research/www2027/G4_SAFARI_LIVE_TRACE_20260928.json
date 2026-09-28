@@ -1,0 +1,137 @@
+{
+  "initial_policies": {
+    "discount": {
+      "eligible": true,
+      "percent": 10
+    },
+    "shipping": {
+      "free_threshold": 50
+    },
+    "returns": {
+      "window_days": 30,
+      "accept_opened": false
+    },
+    "fulfillment": {
+      "max_quantity": 6,
+      "destinations": [
+        "mainland",
+        "island"
+      ]
+    },
+    "changes": {
+      "max_age_hours": 72,
+      "allow_express": true
+    }
+  },
+  "state": {
+    "policies": {
+      "discount": {
+        "eligible": false,
+        "percent": 0
+      },
+      "shipping": {
+        "free_threshold": 50
+      },
+      "returns": {
+        "window_days": 30,
+        "accept_opened": false
+      },
+      "fulfillment": {
+        "max_quantity": 6,
+        "destinations": [
+          "mainland",
+          "island"
+        ]
+      },
+      "changes": {
+        "max_age_hours": 72,
+        "allow_express": true
+      }
+    },
+    "purchases": [],
+    "orders": {
+      "RET-001": {
+        "id": "RET-001",
+        "kind": "returns",
+        "sku": "notebook",
+        "quantity": 1,
+        "status": "delivered",
+        "age_days": 20,
+        "opened": false
+      },
+      "SHIP-001": {
+        "id": "SHIP-001",
+        "kind": "fulfillment",
+        "sku": "lamp",
+        "quantity": 2,
+        "status": "pending",
+        "destination": "island"
+      },
+      "ADDR-001": {
+        "id": "ADDR-001",
+        "kind": "changes",
+        "sku": "lamp",
+        "quantity": 1,
+        "status": "pending",
+        "age_hours": 24,
+        "service": "express",
+        "address": "10 Original Street"
+      }
+    },
+    "inventory": {
+      "notebook": 100,
+      "lamp": 100
+    }
+  },
+  "events": [
+    {
+      "seq": 0,
+      "kind": "read",
+      "request": {
+        "scope": "discount",
+        "if_none_match": null
+      },
+      "status": 200,
+      "response": {
+        "scope": "discount",
+        "revision": "5c83f174615ef26c",
+        "eligible": true,
+        "percent": 10
+      },
+      "state_hash": "0d7d4b517dfe4288"
+    },
+    {
+      "seq": 1,
+      "kind": "publish",
+      "request": {
+        "scope": "discount",
+        "rule": {
+          "eligible": false,
+          "percent": 0
+        }
+      },
+      "status": 200,
+      "response": {
+        "scope": "discount",
+        "revision": "67b16710a49c0b66",
+        "eligible": false,
+        "percent": 0
+      },
+      "state_hash": "271b6e9c34f16da7"
+    },
+    {
+      "seq": 2,
+      "kind": "purchase",
+      "request": {
+        "sku": "notebook",
+        "request_discount": true,
+        "expected_policy_revision": "5c83f174615ef26c"
+      },
+      "status": 409,
+      "response": {
+        "error": "policy_revision_changed"
+      },
+      "state_hash": "271b6e9c34f16da7"
+    }
+  ]
+}

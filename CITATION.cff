@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite this software snapshot and its frozen protocol; the manuscript is not yet peer reviewed."
+title: "RuleShift-Web: A Replayable Workbench for Auditing Agent Memory under Changing Web Policies"
+authors:
+  - family-names: Wang
+    given-names: Chih-Kai
+version: 0.1.0
+license: Apache-2.0
+repository-code: "https://github.com/f0909172434/ruleshift-web"
+type: software
