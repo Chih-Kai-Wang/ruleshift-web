@@ -1,6 +1,6 @@
 # RuleShift-Web
 
-RuleShift-Web is a local research workbench for studying what happens when a website changes its policy while an agent is still holding the old one. You can publish a rule change, watch an agent act on cached evidence, and replay every HTTP event afterward.
+RuleShift-Web is a local research workbench for studying what happens when a website changes its policy while an agent is still holding the old one. You can play the agent yourself: publish a rule change, commit a transaction against cached evidence, and replay every HTTP event afterward.
 
 The workbench keeps three things visible and separate: the policy the agent holds, the policy the site currently serves, and the rule the site enforces when a transaction commits. The site can publish a new rule, answer `304` when a representation has not changed, and reject a stale transaction with `409` without touching order state. Saved traces can be inspected offline.
 
