@@ -1,37 +1,16 @@
 # RuleShift-Web
 
-**A replayable workbench for auditing agent memory under changing Web policies.**
+RuleShift-Web is a local research workbench for studying what happens when a website changes its policy while an agent is still holding the old one. You can publish a rule change, watch an agent act on cached evidence, and replay every HTTP event afterward.
 
-This public research snapshot contains the local HTTP policy site, memory
-strategies, transaction guard, interactive replay interface, frozen protocol,
-formal results, raw SQLite checkpoints, independent audit code, and a working
-Demo manuscript. The manuscript is a **pre-submission draft**, not a peer-reviewed
-or accepted WWW 2027 paper. Author: **Chih-Kai Wang**, National Taipei University
-of Education.
+The workbench keeps three things visible and separate: the policy the agent holds, the policy the site currently serves, and the rule the site enforces when a transaction commits. The site can publish a new rule, answer `304` when a representation has not changed, and reject a stale transaction with `409` without touching order state. Saved traces can be inspected offline.
 
-RuleShift-Web makes three distinct states visible: the policy representation
-held by an agent, the current HTTP representation, and the rule enforced when a
-transaction commits. The site can publish a new rule, return `304` for an
-unchanged representation, and reject a stale transaction with `409` without
-changing order state. Offline traces remain inspectable without network access.
+This public research snapshot contains the local HTTP policy site, memory strategies, transaction guard, replay interface, frozen protocol, formal results, raw SQLite checkpoints, independent audit code, and a working Demo manuscript. The manuscript is a pre-submission draft. It has not been peer reviewed or accepted at WWW 2027. The author is Chih-Kai Wang, National Taipei University of Education.
 
 ## Evidence and scope
 
-The frozen study contains **3,200 model-task executions** across two pinned
-small models and five evidence strategies, plus **1,600 no-LLM control
-decisions**. Each strategy is evaluated on paired eight-task streams. The
-original model/control checkpoints are included under
-`research/www2027/g3-formal-*-20260928/`; the protocol and independently
-recomputed results are in
-[`G3_FROZEN_PROTOCOL.json`](research/www2027/G3_FROZEN_PROTOCOL.json) and
-[`G3_FORMAL_RESULTS.md`](research/www2027/G3_FORMAL_RESULTS.md).
+The frozen study ran **3,200 model-task executions**: two pinned small models, five evidence strategies, paired eight-task streams. A separate no-LLM controller made **1,600 control decisions** on the same streams. The original model and control checkpoints are under `research/www2027/g3-formal-*-20260928/`. The protocol is in [`G3_FROZEN_PROTOCOL.json`](research/www2027/G3_FROZEN_PROTOCOL.json), and the independently recomputed results are in [`G3_FORMAL_RESULTS.md`](research/www2027/G3_FORMAL_RESULTS.md).
 
-Source-dependent validation matched all-source conditional validation on this
-one-relevant-source harness while issuing four fewer policy reads per task.
-Always-refresh had higher observed accuracy for both models, and the no-LLM
-controller was stronger than either model on this controlled task. The result
-supports an **inspectable research instrument**, not a generally superior
-memory policy or reliability claim for real commerce websites.
+Source-dependent validation, the proposed strategy, matched all-source conditional validation in accuracy while issuing four fewer policy reads per task. That saving follows from this harness having one relevant source. Always-refresh had higher observed accuracy than source-dependent validation for both models. The no-LLM controller was stronger than either model on this controlled task. The results support the workbench as a research instrument. They do not show a generally better memory policy, and they say nothing about reliability on real commerce websites.
 
 ## Run the local demonstration
 
@@ -42,11 +21,11 @@ uv sync --frozen --extra dev
 uv run uvicorn ruleshift.web_lab:create_app --factory --host 127.0.0.1 --port 8765
 ```
 
-Open <http://127.0.0.1:8765/lab>. Follow
-[`G4_DEMO_SCRIPT.md`](research/www2027/G4_DEMO_SCRIPT.md) to read a policy,
-publish a change, attempt a transaction, and inspect the saved event trace.
-Open `research/www2027/web_lab_ui.html` directly for the offline fallback.
-The local service has no authentication; keep it bound to loopback.
+Open <http://127.0.0.1:8765/lab>. The walkthrough in
+[`G4_DEMO_SCRIPT.md`](research/www2027/G4_DEMO_SCRIPT.md) reads a policy,
+publishes a change, attempts a transaction, and inspects the saved event trace.
+For the offline fallback, open `research/www2027/web_lab_ui.html` directly.
+The local service has no authentication, so keep it bound to loopback.
 
 ## Independently recompute the saved results
 
@@ -57,25 +36,25 @@ uv run python scripts/audit_g3_streams.py research/www2027/g3-formal-phi-2026092
 uv run python scripts/audit_g3_streams.py research/www2027/g3-formal-control-20260928 --protocol research/www2027/G3_FROZEN_PROTOCOL.json
 ```
 
-See [`G4_REPRODUCIBILITY.md`](research/www2027/G4_REPRODUCIBILITY.md) for
+[`G4_REPRODUCIBILITY.md`](research/www2027/G4_REPRODUCIBILITY.md) lists the
 expected counts, hashes, model revisions, and the Safari trace replay.
 [`COLAB_G3_FORMAL.md`](research/www2027/COLAB_G3_FORMAL.md) records the
 historical CUDA runtime. Model weights and credentials are not bundled.
-Re-running the frozen held-out matrix after changing code or prompts does not
-reproduce the reported experiment.
+If you change code or prompts and re-run the frozen held-out matrix, you are
+running a new experiment, not reproducing the reported one.
 
 ## Manuscript and release boundaries
 
-The current [three-page manuscript](research/www2027/paper/ruleshift_web_demo.pdf)
-and [LaTeX source](research/www2027/paper/ruleshift_web_demo.tex) are working
-versions. They disclose generative-AI assistance and report adverse as well as
-positive findings. A human final scientific review, funding decision, and
-formal conference submission are still outstanding. This GitHub release does
-not imply arXiv posting or conference acceptance.
+The [three-page manuscript](research/www2027/paper/ruleshift_web_demo.pdf)
+and its [LaTeX source](research/www2027/paper/ruleshift_web_demo.tex) are working
+versions. They disclose generative-AI assistance and report the adverse
+findings alongside the positive ones. A final human scientific review, a funding
+decision, and formal conference submission are still outstanding. This GitHub
+release has not been posted to arXiv or accepted by any conference.
 
-Code is Apache-2.0; authored synthetic task data and released experiment
-records are CC BY 4.0, subject to third-party rights. See
+Code is licensed under Apache-2.0. Authored synthetic task data and released
+experiment records are licensed under CC BY 4.0, subject to third-party rights. See
 [`DATA_LICENSE.md`](DATA_LICENSE.md) and [`THIRD_PARTY.md`](THIRD_PARTY.md).
 The system builds on the earlier
-[`RuleShift`](https://github.com/f0909172434/ruleshift) pilot; the older pilot's
+[`RuleShift`](https://github.com/f0909172434/ruleshift) pilot. That pilot's
 results are not part of the frozen Web study.
