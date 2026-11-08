@@ -573,7 +573,7 @@ function App() {
           ))}
         </nav>
         <a
-          href="https://github.com/f0909172434/ruleshift"
+          href="https://github.com/Chih-Kai-Wang/ruleshift"
           target="_blank"
           rel="noreferrer"
           className="source-link"
@@ -1187,7 +1187,7 @@ function App() {
                       ]。統計單位為 {data.summary.paired_comparison.n_pairs}{" "}
                       條配對任務串；相同五個種子跨情境重用，獨立性與樣本量有限，請同時參閱{" "}
                       <a
-                        href="https://github.com/f0909172434/ruleshift/blob/main/docs/RESULTS.md"
+                        href="https://github.com/Chih-Kai-Wang/ruleshift/blob/main/docs/RESULTS.md"
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -1248,14 +1248,14 @@ function App() {
               </p>
               <div className="method-links">
                 <a
-                  href="https://github.com/f0909172434/ruleshift/blob/main/docs/PROTOCOL.md"
+                  href="https://github.com/Chih-Kai-Wang/ruleshift/blob/main/docs/PROTOCOL.md"
                   target="_blank"
                   rel="noreferrer"
                 >
                   閱讀實驗協議 <ArrowUpRight size={15} />
                 </a>
                 <a
-                  href="https://github.com/f0909172434/ruleshift/releases"
+                  href="https://github.com/Chih-Kai-Wang/ruleshift/releases"
                   target="_blank"
                   rel="noreferrer"
                 >

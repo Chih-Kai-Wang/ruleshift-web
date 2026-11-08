@@ -56,5 +56,5 @@ Code is licensed under Apache-2.0. Authored synthetic task data and released
 experiment records are licensed under CC BY 4.0, subject to third-party rights. See
 [`DATA_LICENSE.md`](DATA_LICENSE.md) and [`THIRD_PARTY.md`](THIRD_PARTY.md).
 The system builds on the earlier
-[`RuleShift`](https://github.com/f0909172434/ruleshift) pilot. That pilot's
+[`RuleShift`](https://github.com/Chih-Kai-Wang/ruleshift) pilot. That pilot's
 results are not part of the frozen Web study.
